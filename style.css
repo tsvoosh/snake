@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    font-family: 'DotGothic16', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    font-size: 64px;
+    margin: 16px 0;
+    color: yellowgreen;
+}
+
+.btns_wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    margin: 8px;
+    padding: 8px 16px;
+    background-color: yellowgreen;
+    border: none;
+    font-family: 'DotGothic16', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    cursor : pointer;
+}
+
+#ghost {
+    color: yellowgreen;
+    font-size: 256px;
+    margin: 64px 0;
+}
+
+.green_align {
+    color: yellowgreen;
+    text-align: center;
+}
+
+.display_none {
+    display: none;
+}
+
+#grill {
+    width: 500px;
+    height: 500px;
+    margin: 32px auto;
+    display: flex;
+    flex-wrap: wrap;
+    /* border: 1px solid yellowgreen; */
+}
+
+.block {
+    width: 25px;
+    height: 25px;
+    border: 1px solid yellowgreen;
+}
+
+.player {
+    background-color: yellowgreen;
+}
