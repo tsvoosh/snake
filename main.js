@@ -25,6 +25,8 @@ var player = [...player];
 var x = true;
 var firstMotion = true;
 var running = false;
+var left = false;
+var right = false;
 
 function start() {
         if(!running) {
@@ -33,8 +35,9 @@ function start() {
         if (firstMotion && running && x) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[2].match(/\d+/)[0]) + 1) == 21) {
-                        alert('hai perso');
+                        running = false;
                         firstMotion = false;
+                        alert('hai perso');
                         clearInterval(timeout);
                         return;
                 }
@@ -78,10 +81,11 @@ function goDown() {
 }
 
 function goLeft() {
-        if (running && x) {
+        if (running && x && !firstMotion) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[2].match(/\d+/)[0]) - 1) == 0) {
                         running = false;
+                        left = false;
                         alert('hai perso');
                         clearInterval(timeout);
                         return;
@@ -95,10 +99,37 @@ function goLeft() {
                 tail.classList.remove('player');
                 player.shift();
         } else {
+                left = false;
                 clearInterval(timeout);
                 return;
         }
         var timeout = setTimeout(goLeft, 50);
+};
+
+function goRight() {
+        if (running && x && !firstMotion) {
+                var head = player[player.length - 1];
+                if ((parseInt(head.classList[2].match(/\d+/)[0]) + 1) == 21) {
+                        running = false;
+                        right = false;
+                        alert('hai perso');
+                        clearInterval(timeout);
+                        return;
+                }
+                var tail = player[0];
+                var currentRow = head.classList[1].match(/\d+/)[0];
+                var col = parseInt(head.classList[2].match(/\d+/)[0]) + 1;
+                document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0].classList.add('player');
+                var newHead = document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0];
+                player.push(newHead);
+                tail.classList.remove('player');
+                player.shift();
+        } else {
+                right = false;
+                clearInterval(timeout);
+                return;
+        }
+        var timeout = setTimeout(goRight, 50);
 };
 
 document.getElementById('start').addEventListener('click', start);
@@ -109,8 +140,21 @@ document.addEventListener("keydown", event => {
                 goDown();
         };
         if ((event.key == 'a' || event.key == 'A')) {
+                if(right) {
+                        return;
+                }
+                left = true;
                 y = false;
                 x = true;
                 goLeft();
+        };
+        if ((event.key == 'd' || event.key == 'D')) {
+                if (left) {
+                        return;
+                }
+                right = true;
+                y = false;
+                x = true;
+                goRight();
         };
 });
