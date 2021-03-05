@@ -58,6 +58,7 @@ function goDown() {
         if(y && running) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[1].match(/\d+/)[0]) + 1) == 21) {
+                        running = false;
                         alert('hai perso');
                         clearInterval(timeout);
                         return;
@@ -80,6 +81,7 @@ function goLeft() {
         if (running && x) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[2].match(/\d+/)[0]) - 1) == 0) {
+                        running = false;
                         alert('hai perso');
                         clearInterval(timeout);
                         return;
