@@ -27,6 +27,8 @@ var firstMotion = true;
 var running = false;
 var left = false;
 var right = false;
+var down = false;
+var up = false;
 
 function start() {
         if(!running) {
@@ -62,6 +64,7 @@ function goDown() {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[1].match(/\d+/)[0]) + 1) == 21) {
                         running = false;
+                        down = false;
                         alert('hai perso');
                         clearInterval(timeout);
                         return;
@@ -74,10 +77,37 @@ function goDown() {
                 tail.classList.remove('player');
                 player.shift();
         }  else {
+                down = false;
                 clearInterval(timeout);
                 return;
         }
         var timeout = setTimeout(goDown, 50);
+}
+
+function goUp() {
+
+        if(y && running) {
+                var head = player[player.length - 1];
+                if ((parseInt(head.classList[1].match(/\d+/)[0]) - 1) == 0) {
+                        running = false;
+                        up = false;
+                        alert('hai perso');
+                        clearInterval(timeout);
+                        return;
+                }
+                var tail = player[0];
+                var rowUp = parseInt(head.classList[1].match(/\d+/)[0]) - 1;
+                var currentCol = head.classList[2].match(/\d+/)[0];
+                document.getElementsByClassName('row-' + rowUp + ' col-' + currentCol)[0].classList.add('player');
+                player.push(document.getElementsByClassName('row-' + rowUp + ' col-' + currentCol)[0]);
+                tail.classList.remove('player');
+                player.shift();
+        }  else {
+                up = false;
+                clearInterval(timeout);
+                return;
+        }
+        var timeout = setTimeout(goUp, 50);
 }
 
 function goLeft() {
@@ -135,6 +165,10 @@ function goRight() {
 document.getElementById('start').addEventListener('click', start);
 document.addEventListener("keydown", event => {
         if ((event.key == 's' || event.key == 'S')) {
+                if(up) {
+                        return;
+                }
+                down = true;
                 x = false;
                 y = true;
                 goDown();
@@ -156,5 +190,14 @@ document.addEventListener("keydown", event => {
                 y = false;
                 x = true;
                 goRight();
+        };
+        if ((event.key == 'w' || event.key == 'W')) {
+                if(down) {
+                        return;
+                }
+                up = true;
+                x = false;
+                y = true;
+                goUp();
         };
 });
