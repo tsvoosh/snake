@@ -1,66 +1,114 @@
 var grill = document.getElementById('grill');
-var row = 1;
-var col = 1;
+col = 1;
+row = 1;
 
-for (let index = 0; index < 400; index++) {
-        if (col == 21) {
-                row = row + 1;
-                col = 1;
-        }
-        if (index == 0 || index == 1 || index == 2) {
-                grill.innerHTML += '<div class="block' + ' row-' + row + ' col-' + col + ' player' + '"></div>';
-                col = col + 1;
-        } else {
-                grill.innerHTML += '<div class="block' + ' row-' + row + ' col-' + col + '"></div>';
-                col = col + 1;
+function makeGrill() {
+        for (let index = 0; index < 400; index++) {
+                if (col == 21) {
+                        row = row + 1;
+                        col = 1;
+                }
+                if (index == 0 || index == 1 || index == 2) {
+                        grill.innerHTML += '<div class="block' + ' row-' + row + ' col-' + col + ' player' + '"></div>';
+                        col = col + 1;
+                } else {
+                        grill.innerHTML += '<div class="block' + ' row-' + row + ' col-' + col + '"></div>';
+                        col = col + 1;
+                }
         }
 }
 
-var mainAxis = 'row';
+makeGrill();
+
 var player = document.getElementsByClassName('player');
-var tail = player[0];
-var head = player[player.length - 1];
-var currentAxisX = player[0].classList[1];
+var player = [...player];
+var x = true;
+var firstMotion = true;
 var running = false;
-function newHead(axis, head) {
-        if (axis == 'row') {
-                document.getElementsByClassName(currentAxisX + ' col-' + (parseInt(head.classList[2].match(/\d+/)[0]) + 1))[0].classList.add('player');
-        }
-}
 
-function moveX() {
-        if ((parseInt(head.classList[2].match(/\d+/)[0]) + 1) == 21) {
-                alert('hai perso');
-                running = false;
-                return;
-        } else if (running) {
-                newHead(mainAxis, head);
-                player[0].classList.remove('player');
-                player = document.getElementsByClassName('player');
-                head = player[player.length - 1];
+function start() {
+        if(!running) {
+                running = true;
+        }
+        if (firstMotion && running && x) {
+                var head = player[player.length - 1];
+                if ((parseInt(head.classList[2].match(/\d+/)[0]) + 1) == 21) {
+                        alert('hai perso');
+                        firstMotion = false;
+                        clearInterval(timeout);
+                        return;
+                }
+                var tail = player[0];
+                nextCol = parseInt(head.classList[2].match(/\d+/)[0]) + 1;
+                var nextHead = 'row-1' + ' col-' + nextCol;
+                document.getElementsByClassName(nextHead)[0].classList.add('player');
+                player.push(document.getElementsByClassName(nextHead)[0]);
+                tail.classList.remove('player');
+                player.shift();
         } else {
+                firstMotion = false;
+                clearInterval(timeout);
                 return;
         }
-        var timeout = setTimeout(moveX, 50);
+        var timeout = setTimeout(start, 50);
 }
 
 function goDown() {
-        var rowDown = parseInt(head.classList[1].match(/\d+/)[0]) + 1;
-        var currentCol = head.classList[2].match(/\d+/)[0];
-        head.classList.remove('player');
-        document.getElementsByClassName('row-' + rowDown + ' col-' + currentCol)[0].classList.add('player');
+
+        if(y && running) {
+                var head = player[player.length - 1];
+                if ((parseInt(head.classList[1].match(/\d+/)[0]) + 1) == 21) {
+                        alert('hai perso');
+                        clearInterval(timeout);
+                        return;
+                }
+                var tail = player[0];
+                var rowDown = parseInt(head.classList[1].match(/\d+/)[0]) + 1;
+                var currentCol = head.classList[2].match(/\d+/)[0];
+                document.getElementsByClassName('row-' + rowDown + ' col-' + currentCol)[0].classList.add('player');
+                player.push(document.getElementsByClassName('row-' + rowDown + ' col-' + currentCol)[0]);
+                tail.classList.remove('player');
+                player.shift();
+        }  else {
+                clearInterval(timeout);
+                return;
+        }
+        var timeout = setTimeout(goDown, 50);
 }
 
-document.getElementById('help').addEventListener('click', function() {
-        running = true;
-});
-document.getElementById('help').addEventListener('click', moveX);
+function goLeft() {
+        if (running && x) {
+                var head = player[player.length - 1];
+                if ((parseInt(head.classList[2].match(/\d+/)[0]) - 1) == 0) {
+                        alert('hai perso');
+                        clearInterval(timeout);
+                        return;
+                }
+                var tail = player[0];
+                var currentRow = head.classList[1].match(/\d+/)[0];
+                var col = parseInt(head.classList[2].match(/\d+/)[0]) - 1;
+                document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0].classList.add('player');
+                var newHead = document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0];
+                player.push(newHead);
+                tail.classList.remove('player');
+                player.shift();
+        } else {
+                clearInterval(timeout);
+                return;
+        }
+        var timeout = setTimeout(goLeft, 50);
+};
 
+document.getElementById('start').addEventListener('click', start);
 document.addEventListener("keydown", event => {
-        if((event.key == 's' || event.key == 'S') && running && mainAxis == 'row'){
-                running = false;
+        if ((event.key == 's' || event.key == 'S')) {
+                x = false;
+                y = true;
                 goDown();
         };
-      });
-
-
+        if ((event.key == 'a' || event.key == 'A')) {
+                y = false;
+                x = true;
+                goLeft();
+        };
+});
