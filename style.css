@@ -51,18 +51,18 @@ h1 {
 }
 
 #grill {
-    width: 500px;
-    height: 500px;
+    width: 502px;
+    height: 502px;
     margin: 32px auto;
     display: flex;
     flex-wrap: wrap;
-    /* border: 1px solid yellowgreen; */
+    border: 1px solid yellowgreen;
 }
 
 .block {
     width: 25px;
     height: 25px;
-    border: 1px solid yellowgreen;
+    /* border: 1px solid yellowgreen; */
 }
 
 .player {

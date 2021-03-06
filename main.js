@@ -8,7 +8,7 @@ function makeGrill() {
                         row = row + 1;
                         col = 1;
                 }
-                if (index == 0 || index == 1 || index == 2) {
+                if (index == 0 || index == 1 || index == 2 || index == 3 || index == 4 || index == 5 || index == 6 || index == 7 || index == 8 || index == 9 || index == 10) {
                         grill.innerHTML += '<div class="block' + ' row-' + row + ' col-' + col + ' player' + '"></div>';
                         col = col + 1;
                 } else {
@@ -29,6 +29,7 @@ var left = false;
 var right = false;
 var down = false;
 var up = false;
+var active = 0;
 
 function start() {
         if(!running) {
@@ -164,7 +165,10 @@ function goRight() {
 
 document.getElementById('start').addEventListener('click', start);
 document.addEventListener("keydown", event => {
-        if ((event.key == 's' || event.key == 'S')) {
+        if ((event.key == 's' || event.key == 'S') && running) {
+                if(event.repeat) {
+                        return;
+                }
                 if(up) {
                         return;
                 }
@@ -173,7 +177,10 @@ document.addEventListener("keydown", event => {
                 y = true;
                 goDown();
         };
-        if ((event.key == 'a' || event.key == 'A')) {
+        if ((event.key == 'a' || event.key == 'A') && running) {
+                if(event.repeat) {
+                        return;
+                }
                 if(right) {
                         return;
                 }
@@ -182,7 +189,10 @@ document.addEventListener("keydown", event => {
                 x = true;
                 goLeft();
         };
-        if ((event.key == 'd' || event.key == 'D')) {
+        if ((event.key == 'd' || event.key == 'D') && running) {
+                if(event.repeat) {
+                        return;
+                }
                 if (left) {
                         return;
                 }
@@ -191,7 +201,10 @@ document.addEventListener("keydown", event => {
                 x = true;
                 goRight();
         };
-        if ((event.key == 'w' || event.key == 'W')) {
+        if ((event.key == 'w' || event.key == 'W') && running) {
+                if(event.repeat) {
+                        return;
+                }
                 if(down) {
                         return;
                 }
