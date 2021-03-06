@@ -41,19 +41,22 @@ function start() {
         if (firstMotion && running && x) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[2].match(/\d+/)[0]) + 1) == 21) {
-                        running = false;
-                        firstMotion = false;
-                        alert('hai perso');
-                        clearInterval(timeout);
-                        return;
+                        var tail = player[0];
+                        nextCol = 1;
+                        var nextHead = 'row-1' + ' col-' + nextCol;
+                        document.getElementsByClassName(nextHead)[0].classList.add('player');
+                        player.push(document.getElementsByClassName(nextHead)[0]);
+                        tail.classList.remove('player');
+                        player.shift();
+                } else {
+                        var tail = player[0];
+                        nextCol = parseInt(head.classList[2].match(/\d+/)[0]) + 1;
+                        var nextHead = 'row-1' + ' col-' + nextCol;
+                        document.getElementsByClassName(nextHead)[0].classList.add('player');
+                        player.push(document.getElementsByClassName(nextHead)[0]);
+                        tail.classList.remove('player');
+                        player.shift();
                 }
-                var tail = player[0];
-                nextCol = parseInt(head.classList[2].match(/\d+/)[0]) + 1;
-                var nextHead = 'row-1' + ' col-' + nextCol;
-                document.getElementsByClassName(nextHead)[0].classList.add('player');
-                player.push(document.getElementsByClassName(nextHead)[0]);
-                tail.classList.remove('player');
-                player.shift();
         } else {
                 firstMotion = false;
                 clearInterval(timeout);
@@ -61,25 +64,33 @@ function start() {
         }
         var timeout = setTimeout(start, 50);
 }
-
+var hafatt;
 function goDown() {
 
         if(y && running) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[1].match(/\d+/)[0]) + 1) == 21) {
-                        running = false;
-                        down = false;
-                        alert('hai perso');
-                        clearInterval(timeout);
-                        return;
+                        // running = false;
+                        // down = false;
+                        // alert('hai perso');
+                        // clearInterval(timeout);
+                        // return;
+                        var tail = player[0];
+                        var currentCol = head.classList[2].match(/\d+/)[0];
+                        var nextRow = 1;
+                        document.getElementsByClassName('row-' + nextRow + ' col-' + currentCol)[0].classList.add('player');
+                        player.push(document.getElementsByClassName('row-' + nextRow + ' col-' + currentCol)[0]);
+                        tail.classList.remove('player');
+                        player.shift();
+                } else {
+                        var tail = player[0];
+                        var rowDown = parseInt(head.classList[1].match(/\d+/)[0]) + 1;
+                        var currentCol = head.classList[2].match(/\d+/)[0];
+                        document.getElementsByClassName('row-' + rowDown + ' col-' + currentCol)[0].classList.add('player');
+                        player.push(document.getElementsByClassName('row-' + rowDown + ' col-' + currentCol)[0]);
+                        tail.classList.remove('player');
+                        player.shift();
                 }
-                var tail = player[0];
-                var rowDown = parseInt(head.classList[1].match(/\d+/)[0]) + 1;
-                var currentCol = head.classList[2].match(/\d+/)[0];
-                document.getElementsByClassName('row-' + rowDown + ' col-' + currentCol)[0].classList.add('player');
-                player.push(document.getElementsByClassName('row-' + rowDown + ' col-' + currentCol)[0]);
-                tail.classList.remove('player');
-                player.shift();
         }  else {
                 down = false;
                 clearInterval(timeout);
@@ -93,19 +104,27 @@ function goUp() {
         if(y && running) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[1].match(/\d+/)[0]) - 1) == 0) {
-                        running = false;
-                        up = false;
-                        alert('hai perso');
-                        clearInterval(timeout);
-                        return;
+                        // running = false;
+                        // up = false;
+                        // alert('hai perso');
+                        // clearInterval(timeout);
+                        // return;
+                        var tail = player[0];
+                        var nextRow = 20;
+                        var currentCol = head.classList[2].match(/\d+/)[0];
+                        document.getElementsByClassName('row-' + nextRow + ' col-' + currentCol)[0].classList.add('player');
+                        player.push(document.getElementsByClassName('row-' + nextRow + ' col-' + currentCol)[0]);
+                        tail.classList.remove('player');
+                        player.shift();
+                } else {
+                        var tail = player[0];
+                        var rowUp = parseInt(head.classList[1].match(/\d+/)[0]) - 1;
+                        var currentCol = head.classList[2].match(/\d+/)[0];
+                        document.getElementsByClassName('row-' + rowUp + ' col-' + currentCol)[0].classList.add('player');
+                        player.push(document.getElementsByClassName('row-' + rowUp + ' col-' + currentCol)[0]);
+                        tail.classList.remove('player');
+                        player.shift();
                 }
-                var tail = player[0];
-                var rowUp = parseInt(head.classList[1].match(/\d+/)[0]) - 1;
-                var currentCol = head.classList[2].match(/\d+/)[0];
-                document.getElementsByClassName('row-' + rowUp + ' col-' + currentCol)[0].classList.add('player');
-                player.push(document.getElementsByClassName('row-' + rowUp + ' col-' + currentCol)[0]);
-                tail.classList.remove('player');
-                player.shift();
         }  else {
                 up = false;
                 clearInterval(timeout);
@@ -118,20 +137,25 @@ function goLeft() {
         if (running && x && !firstMotion) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[2].match(/\d+/)[0]) - 1) == 0) {
-                        running = false;
-                        left = false;
-                        alert('hai perso');
-                        clearInterval(timeout);
-                        return;
+                        // view previous commit before portals, accidentaly deleted the alert part (which won't come back anyway)
+                        var tail = player[0];
+                        var currentRow = head.classList[1].match(/\d+/)[0];
+                        var nextCol = 20;
+                        document.getElementsByClassName('row-' + currentRow + ' col-' + nextCol)[0].classList.add('player');
+                        var newHead = document.getElementsByClassName('row-' + currentRow + ' col-' + nextCol)[0];
+                        player.push(newHead);
+                        tail.classList.remove('player');
+                        player.shift();
+                } else {
+                        var tail = player[0];
+                        var currentRow = head.classList[1].match(/\d+/)[0];
+                        var col = parseInt(head.classList[2].match(/\d+/)[0]) - 1;
+                        document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0].classList.add('player');
+                        var newHead = document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0];
+                        player.push(newHead);
+                        tail.classList.remove('player');
+                        player.shift();
                 }
-                var tail = player[0];
-                var currentRow = head.classList[1].match(/\d+/)[0];
-                var col = parseInt(head.classList[2].match(/\d+/)[0]) - 1;
-                document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0].classList.add('player');
-                var newHead = document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0];
-                player.push(newHead);
-                tail.classList.remove('player');
-                player.shift();
         } else {
                 left = false;
                 clearInterval(timeout);
@@ -144,20 +168,29 @@ function goRight() {
         if (running && x && !firstMotion) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[2].match(/\d+/)[0]) + 1) == 21) {
-                        running = false;
-                        right = false;
-                        alert('hai perso');
-                        clearInterval(timeout);
-                        return;
+                        // running = false;
+                        // right = false;
+                        // alert('hai perso');
+                        // clearInterval(timeout);
+                        // return;
+                        var tail = player[0];
+                        var currentRow = head.classList[1].match(/\d+/)[0];
+                        var col = 1;
+                        document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0].classList.add('player');
+                        var newHead = document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0];
+                        player.push(newHead);
+                        tail.classList.remove('player');
+                        player.shift();
+                } else {
+                        var tail = player[0];
+                        var currentRow = head.classList[1].match(/\d+/)[0];
+                        var col = parseInt(head.classList[2].match(/\d+/)[0]) + 1;
+                        document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0].classList.add('player');
+                        var newHead = document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0];
+                        player.push(newHead);
+                        tail.classList.remove('player');
+                        player.shift();
                 }
-                var tail = player[0];
-                var currentRow = head.classList[1].match(/\d+/)[0];
-                var col = parseInt(head.classList[2].match(/\d+/)[0]) + 1;
-                document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0].classList.add('player');
-                var newHead = document.getElementsByClassName('row-' + currentRow + ' col-' + col)[0];
-                player.push(newHead);
-                tail.classList.remove('player');
-                player.shift();
         } else {
                 right = false;
                 clearInterval(timeout);
