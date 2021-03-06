@@ -29,7 +29,10 @@ var left = false;
 var right = false;
 var down = false;
 var up = false;
-var active = 0;
+var activeOne = 0;
+var activeTwo = 0;
+var activeThree = 0;
+var activeFour = 0;
 
 function start() {
         if(!running) {
@@ -166,10 +169,17 @@ function goRight() {
 document.getElementById('start').addEventListener('click', start);
 document.addEventListener("keydown", event => {
         if ((event.key == 's' || event.key == 'S') && running) {
-                if(event.repeat) {
+                if(up) {
                         return;
                 }
-                if(up) {
+                activeTwo = 0;
+                activeThree = 0;
+                activeFour = 0;
+                ++activeOne;
+                if(activeOne > 1) {
+                        return;
+                }
+                if(event.repeat) {
                         return;
                 }
                 down = true;
@@ -178,10 +188,17 @@ document.addEventListener("keydown", event => {
                 goDown();
         };
         if ((event.key == 'a' || event.key == 'A') && running) {
-                if(event.repeat) {
+                if(right) {
                         return;
                 }
-                if(right) {
+                activeOne = 0;
+                activeThree = 0;
+                activeFour = 0;
+                ++activeTwo;
+                if(activeTwo > 1) {
+                        return;
+                }
+                if(event.repeat) {
                         return;
                 }
                 left = true;
@@ -190,10 +207,17 @@ document.addEventListener("keydown", event => {
                 goLeft();
         };
         if ((event.key == 'd' || event.key == 'D') && running) {
-                if(event.repeat) {
+                if (left) {
                         return;
                 }
-                if (left) {
+                activeOne = 0;
+                activeTwo = 0;
+                activeFour = 0;
+                ++activeThree;
+                if(activeThree > 1) {
+                        return;
+                }
+                if(event.repeat) {
                         return;
                 }
                 right = true;
@@ -202,10 +226,17 @@ document.addEventListener("keydown", event => {
                 goRight();
         };
         if ((event.key == 'w' || event.key == 'W') && running) {
-                if(event.repeat) {
+                if(down) {
                         return;
                 }
-                if(down) {
+                activeOne = 0;
+                activeThree = 0;
+                activeTwo = 0;
+                ++activeFour;
+                if(activeFour > 1) {
+                        return;
+                }
+                if(event.repeat) {
                         return;
                 }
                 up = true;
