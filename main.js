@@ -35,7 +35,7 @@ var activeThree = 0;
 var activeFour = 0;
 
 function start() {
-        if(!running) {
+        if (!running) {
                 running = true;
         }
         if (firstMotion && running && x) {
@@ -59,22 +59,17 @@ function start() {
                 }
         } else {
                 firstMotion = false;
-                clearInterval(timeout);
+                clearTimeout(timeout);
                 return;
         }
         var timeout = setTimeout(start, 50);
 }
-var hafatt;
+
 function goDown() {
 
-        if(y && running) {
+        if (y && running) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[1].match(/\d+/)[0]) + 1) == 21) {
-                        // running = false;
-                        // down = false;
-                        // alert('hai perso');
-                        // clearInterval(timeout);
-                        // return;
                         var tail = player[0];
                         var currentCol = head.classList[2].match(/\d+/)[0];
                         var nextRow = 1;
@@ -83,6 +78,7 @@ function goDown() {
                         tail.classList.remove('player');
                         player.shift();
                 } else {
+                        right = false;
                         var tail = player[0];
                         var rowDown = parseInt(head.classList[1].match(/\d+/)[0]) + 1;
                         var currentCol = head.classList[2].match(/\d+/)[0];
@@ -91,24 +87,22 @@ function goDown() {
                         tail.classList.remove('player');
                         player.shift();
                 }
-        }  else {
+        } else {
                 down = false;
-                clearInterval(timeout);
+                clearTimeout(timeoutOne);
                 return;
         }
-        var timeout = setTimeout(goDown, 50);
+        timeoutOne = setTimeout(goDown, 50);
 }
 
 function goUp() {
 
-        if(y && running) {
+        if (y && running) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[1].match(/\d+/)[0]) - 1) == 0) {
-                        // running = false;
-                        // up = false;
-                        // alert('hai perso');
-                        // clearInterval(timeout);
-                        // return;
+                        if (!timeoutTwo) {
+                                timeoutTwo = setTimeout(goUp, 50);
+                        }
                         var tail = player[0];
                         var nextRow = 20;
                         var currentCol = head.classList[2].match(/\d+/)[0];
@@ -125,19 +119,18 @@ function goUp() {
                         tail.classList.remove('player');
                         player.shift();
                 }
-        }  else {
+        } else {
                 up = false;
-                clearInterval(timeout);
+                clearTimeout(timeoutTwo);
                 return;
         }
-        var timeout = setTimeout(goUp, 50);
+        timeoutTwo = setTimeout(goUp, 50);
 }
 
 function goLeft() {
         if (running && x && !firstMotion) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[2].match(/\d+/)[0]) - 1) == 0) {
-                        // view previous commit before portals, accidentaly deleted the alert part (which won't come back anyway)
                         var tail = player[0];
                         var currentRow = head.classList[1].match(/\d+/)[0];
                         var nextCol = 20;
@@ -158,21 +151,16 @@ function goLeft() {
                 }
         } else {
                 left = false;
-                clearInterval(timeout);
+                clearTimeout(timeoutThree);
                 return;
         }
-        var timeout = setTimeout(goLeft, 50);
+        timeoutThree = setTimeout(goLeft, 50);
 };
 
 function goRight() {
-        if (running && x && !firstMotion) {
+        if (running && x && !firstMotion && right) {
                 var head = player[player.length - 1];
                 if ((parseInt(head.classList[2].match(/\d+/)[0]) + 1) == 21) {
-                        // running = false;
-                        // right = false;
-                        // alert('hai perso');
-                        // clearInterval(timeout);
-                        // return;
                         var tail = player[0];
                         var currentRow = head.classList[1].match(/\d+/)[0];
                         var col = 1;
@@ -193,26 +181,39 @@ function goRight() {
                 }
         } else {
                 right = false;
-                clearInterval(timeout);
+                clearTimeout(timeoutFour);
                 return;
         }
-        var timeout = setTimeout(goRight, 50);
+        timeoutFour = setTimeout(goRight, 50);
 };
 
+var control;
 document.getElementById('start').addEventListener('click', start);
 document.addEventListener("keydown", event => {
+        var now = new Date().getTime();
+        if(control == undefined) {
+                control = now;
+        } else {
+                difference = now - control;
+                if(difference < 25) {
+                        return;
+                } else {
+                        control = now;
+                }
+        }
         if ((event.key == 's' || event.key == 'S') && running) {
-                if(up) {
+                downing = true;
+                if (up) {
                         return;
                 }
                 activeTwo = 0;
                 activeThree = 0;
                 activeFour = 0;
                 ++activeOne;
-                if(activeOne > 1) {
+                if (activeOne > 1) {
                         return;
                 }
-                if(event.repeat) {
+                if (event.repeat) {
                         return;
                 }
                 down = true;
@@ -221,17 +222,17 @@ document.addEventListener("keydown", event => {
                 goDown();
         };
         if ((event.key == 'a' || event.key == 'A') && running) {
-                if(right) {
+                if (right) {
                         return;
                 }
                 activeOne = 0;
                 activeThree = 0;
                 activeFour = 0;
                 ++activeTwo;
-                if(activeTwo > 1) {
+                if (activeTwo > 1) {
                         return;
                 }
-                if(event.repeat) {
+                if (event.repeat) {
                         return;
                 }
                 left = true;
@@ -247,10 +248,10 @@ document.addEventListener("keydown", event => {
                 activeTwo = 0;
                 activeFour = 0;
                 ++activeThree;
-                if(activeThree > 1) {
+                if (activeThree > 1) {
                         return;
                 }
-                if(event.repeat) {
+                if (event.repeat) {
                         return;
                 }
                 right = true;
@@ -259,17 +260,17 @@ document.addEventListener("keydown", event => {
                 goRight();
         };
         if ((event.key == 'w' || event.key == 'W') && running) {
-                if(down) {
+                if (down) {
                         return;
                 }
                 activeOne = 0;
                 activeThree = 0;
                 activeTwo = 0;
                 ++activeFour;
-                if(activeFour > 1) {
+                if (activeFour > 1) {
                         return;
                 }
-                if(event.repeat) {
+                if (event.repeat) {
                         return;
                 }
                 up = true;
