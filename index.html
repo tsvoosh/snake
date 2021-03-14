@@ -10,19 +10,37 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Snake</title>
 </head>
 
 <body>
     <h1>Snake</h1>
     <div class="btns_wrap">
-        <button id="start" class="btn">start</button>
-        <button id="help" class="btn">restart</button>
+        <span id="start" class="btn">start</span>
+        <span id="help" class="btn">how to play</span>
     </div>
-    <div id="grill">
-    </div>
-    <div class="btns_wrap display_none">
+    <div class="btns_wrap">
         <i id="ghost" class="fas fa-ghost green_align"></i>
+    </div>
+    <div class="dead_wrap green_align display_none">
+        <i id="dead" class="fas fa-dizzy"></i>
+        <h2 id="dead_title">Ops, you died :( wanna play again? click on the start button</h2>
+    </div>
+    <span class="points green_align display_none"><h5>SCORE : <span id="points">0</span></h5></span>
+    <div id="grill" class="display_none">
+    </div>
+    <div class="how_to display_none">
+        <h2 id="ply_title" class="green_align">How to play</h2>
+        <ul class="green_align" id="help_list">
+            <li>Click on the start button for a quick game!</li>
+            <li>In order to move you have to use W,A,S D keys just like in most third person games.</li>
+            <li>W = Up , S = Down , A = Left , D = Right</li>
+            <li>The edges of the grill work like portals, you only die when the snake touches itself (yeah, kinda
+                ambiguous.. but it is what it is).</li>
+            <li>Eat as much ghosts as you can! this will increase your score (wait.. wasn't that pacman or something?
+                yeah whatever).</li>
+        </ul>
     </div>
     <footer class="green_align">
         Made by tsvoosh ©

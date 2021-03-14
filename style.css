@@ -7,13 +7,16 @@
 body {
     background-color: black;
     font-family: 'DotGothic16', sans-serif;
+    min-width: 550px;
+    overflow: hidden;
 }
 
 h1 {
     text-align: center;
     font-size: 64px;
-    margin: 16px 0;
     color: yellowgreen;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .btns_wrap {
@@ -25,7 +28,6 @@ h1 {
     margin: 8px;
     padding: 8px 16px;
     background-color: yellowgreen;
-    border: none;
     font-family: 'DotGothic16', sans-serif;
     font-size: 16px;
     font-weight: bold;
@@ -33,6 +35,7 @@ h1 {
 
 .btn:hover {
     cursor : pointer;
+    transform: scale(1.1);
 }
 
 #ghost {
@@ -50,10 +53,10 @@ h1 {
     display: none;
 }
 
-#grill {
+.grill {
     width: 502px;
     height: 502px;
-    margin: 32px auto;
+    margin: 16px auto;
     display: flex;
     flex-wrap: wrap;
     border: 1px solid yellowgreen;
@@ -62,9 +65,40 @@ h1 {
 .block {
     width: 25px;
     height: 25px;
-    /* border: 1px solid yellowgreen; */
 }
 
 .player {
     background-color: yellowgreen;
+}
+
+#help_list {
+    width: 30%;
+    margin: 32px auto;
+}
+
+#ply_title {
+    margin-top: 32px;
+}
+
+#dead_title {
+    margin-bottom: 16px;
+}
+
+#dead {
+    color: yellowgreen;
+    font-size: 128px;
+    margin: 32px 0;
+}
+
+.food {
+    font-size: 25px;
+    color: yellowgreen;
+}
+
+.eat {
+    text-align: center;
+}
+
+footer {
+    padding: 16px 0;
 }
